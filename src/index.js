@@ -10,3 +10,4 @@ export { default as SideSliderWrapper } from "./components/SideSliderWrapper/Sid
 export { default as ProductList } from "./components/ProductList/ProductList";
 export { default as Wishlist } from "./components/Wishlist/Wishlist";
 export { default as WishlistCard } from "./components/WishlistCard/WishlistCard";
+export { default as Cart } from "./components/Cart/Cart";

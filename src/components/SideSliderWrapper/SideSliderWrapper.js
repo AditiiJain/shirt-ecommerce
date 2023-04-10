@@ -1,10 +1,11 @@
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { motion } from "framer-motion";
-
+import { RiRefreshFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_SIDE_SLIDER_SHOW } from "../../redux/sideSliderShowSlice";
+import { SET_CART_ITEMS } from "../../redux/cartItemsSlice";
 import "./SideSliderWrapper.css";
-import { Wishlist } from "../../index";
+import { Wishlist, Cart } from "../../index";
 import ViewSimilar from "../ViewSmiliar/ViewSimilar";
 
 function SideSliderWrapper() {
@@ -17,7 +18,10 @@ function SideSliderWrapper() {
     };
     dispatch(SET_SIDE_SLIDER_SHOW(payload));
   };
-
+  const clearCart = () => {
+    dispatch(SET_CART_ITEMS([]));
+    localStorage.setItem("cartItems", JSON.stringify([]));
+  };
   return (
     <motion.div
       initial={{ opacity: 0, x: 200 }}
@@ -39,18 +43,24 @@ function SideSliderWrapper() {
         {type === "wishlist" && <div>Wishlist</div>}
         {type === "cart" && <div>Cart</div>}
         {type === "viewSimilar" && <div>Similar Shirts</div>}
-        {/* <p className="text-textColor text-lg font-semibold">Cart</p>
-        <motion.p
-          whileTap={{ scale: 0.75 }}
-          className="flex items-center gap-2 p-1 my-2 bg-gray-100 rounded-md hover:shadow-md cursor-pointer text-textColor text-base"
-          onClick={clearCart}
-        >
-          Clear <RiRefreshFill />
-        </motion.p> */}
+
+        {type === "cart" && (
+          <div>
+            <motion.p
+              whileTap={{ scale: 0.9 }}
+              className="clear-cart"
+              onClick={clearCart}
+            >
+              Clear <RiRefreshFill />
+            </motion.p>
+          </div>
+        )}
       </div>
-      {type === "wishlist" && <Wishlist />}
-      {type === "viewSimilar" && <ViewSimilar />}
-      {type === "cart" && <div>Cart</div>}
+      <div className="side-slider-content">
+        {type === "wishlist" && <Wishlist />}
+        {type === "viewSimilar" && <ViewSimilar />}
+        {type === "cart" && <Cart />}
+      </div>
     </motion.div>
   );
 }

@@ -38,7 +38,6 @@ const ProductDetails = () => {
   };
 
   const addToCart = (item) => {
-    console.log(item);
     let temporary = {
       ...item[0],
       selectedSize: selectSize,
@@ -134,19 +133,20 @@ const ProductDetails = () => {
               </div>
 
               <div className="specific-product-details-bottom">
-                <div
+                <button
                   className={`specific-product-details-cart-btn ${
                     selectSize == "" ? "btn-disabled" : ""
                   }`}
                   onClick={() => {
                     addToCart(productData);
                   }}
+                  disabled={selectSize == "" ? true : false}
                 >
                   <span className="icon-btn">
                     <BsHandbagFill />
                   </span>
                   <span>ADD TO CART</span>
-                </div>
+                </button>
                 <div
                   className="specific-product-details-wishlist-btn"
                   onClick={() => {

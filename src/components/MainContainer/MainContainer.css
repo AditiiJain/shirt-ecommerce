@@ -1,0 +1,25 @@
+.main-page-container {
+  display: flex;
+  flex-direction: row;
+background-color: white;
+padding: 36px 12px;
+}
+
+.filter-left-container {
+  min-width: 252px;
+  max-width: 252px;
+}
+.items-right-container{
+    display: flex;
+    flex-direction: column;
+    gap:24px;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+}
+.product-list{
+  display: flex;
+  flex-direction: row;
+  gap:24px;
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
+}

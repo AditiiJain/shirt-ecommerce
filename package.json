@@ -4,6 +4,7 @@
   "description": "An ecommerce website for selling shirts",
   "scripts": {
     "start": "parcel index.html",
+    "build":"parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Aditi Jain",

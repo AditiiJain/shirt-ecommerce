@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchWishlist } from "../utils/fetchLocalStorageData";
 
 const wishlist = fetchWishlist();
-console.log(wishlist,"w")
+console.log(wishlist,"fetch")
 
 const wishlistSlice = createSlice({
   name: "wishlist",
@@ -11,7 +11,7 @@ const wishlistSlice = createSlice({
   },
   reducers: {
     SET_WISHLIST: (state, action) => {
-        state.wishlist = action.payload
+      state.wishlist = action.payload;
     },
   },
 });

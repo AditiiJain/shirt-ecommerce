@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCardText } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_WISHLIST } from "../../redux/wishlistSlice";
-import { SET_SIDE_SLIDER_SHOW } from "../../redux/sideSliderShowSlice";
+import { showSideSlider, addToWishlist } from "../../utils/commonFunctions";
+
 
 const ProductCard = ({ product, view }) => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
@@ -12,26 +12,6 @@ const ProductCard = ({ product, view }) => {
   const sideSliderShow = useSelector(
     (state) => state.sideSliderShow.sideSliderShow
   );
-  const showSideSlider = (type) => {
-    const payload = {
-      show: !sideSliderShow,
-      type: type,
-    };
-    dispatch(SET_SIDE_SLIDER_SHOW(payload));
-  };
-
-  const addToWishlist = (item) => {
-    let arr = [...wishlist, item];
-    let newWishlist = [];
-
-    for (let i = 0; i < arr.length; i++) {
-      if (!newWishlist.includes(arr[i])) {
-        newWishlist.push(arr[i]);
-      }
-    }
-    dispatch(SET_WISHLIST(newWishlist));
-    localStorage.setItem("wishlist", JSON.stringify(newWishlist));
-  };
 
   return (
     <>
@@ -44,14 +24,19 @@ const ProductCard = ({ product, view }) => {
             <div className="wishlist-icon-container">
               <AiOutlineHeart
                 className="wishlist-icon"
-                onClick={() => addToWishlist(product)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  addToWishlist(wishlist, dispatch, product);
+                  showSideSlider(dispatch, sideSliderShow, "wishlist");
+                }}
               />
             </div>
             {view && (
               <div
                 className="view-similar-container"
-                onClick={() => {
-                  showSideSlider("viewSimilar");
+                onClick={(e) => {
+                  e.preventDefault();
+                  showSideSlider(dispatch, sideSliderShow, "viewSimilar");
                 }}
               >
                 <span>

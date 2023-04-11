@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 function WishlistCard({ item }) {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   const dispatch = useDispatch();
-
   const removeFromWishlist = () => {
     let newWishlist = wishlist.filter((product) => product.id !== item.id);
     console.log(newWishlist, "e");
@@ -19,8 +18,14 @@ function WishlistCard({ item }) {
     <Link to={`/shirt/${item?.id}`} className="link">
       <div className="wishlist-card-container">
         <div className="wishlist-card-img-container">
-          <img src={item?.images[0]} alt="shirt" />
-          <div className="wishlist-remove" onClick={removeFromWishlist}>
+          <img src={item?.images?.[0]} alt="shirt" />
+          <div
+            className="wishlist-remove"
+            onClick={(e) => {
+              // e.preventDefault();
+              removeFromWishlist();
+            }}
+          >
             <TfiClose />
           </div>
         </div>

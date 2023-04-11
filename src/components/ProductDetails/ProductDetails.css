@@ -272,8 +272,23 @@
 
 .selected-size {
   border: 1px solid #fd6488;
+  color: #fd6488;
 }
 
 .btn-disabled {
   cursor: not-allowed;
+}
+
+.loading {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.loading img{
+  width:100px;
+  height: 100px;
 }

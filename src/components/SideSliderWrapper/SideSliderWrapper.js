@@ -6,22 +6,17 @@ import { SET_SIDE_SLIDER_SHOW } from "../../redux/sideSliderShowSlice";
 import { SET_CART_ITEMS } from "../../redux/cartItemsSlice";
 import "./SideSliderWrapper.css";
 import { Wishlist, Cart } from "../../index";
+import { showSideSlider } from "../../utils/commonFunctions";
 import ViewSimilar from "../ViewSmiliar/ViewSimilar";
+import { clearCart } from "../../utils/commonFunctions";
 
 function SideSliderWrapper() {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.sideSliderShow.type);
-  const showSideSlider = () => {
-    const payload = {
-      show: false,
-      type: "",
-    };
-    dispatch(SET_SIDE_SLIDER_SHOW(payload));
-  };
-  const clearCart = () => {
-    dispatch(SET_CART_ITEMS([]));
-    localStorage.setItem("cartItems", JSON.stringify([]));
-  };
+  const sideSliderShow = useSelector(
+    (state) => state.sideSliderShow.sideSliderShow
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 200 }}
@@ -34,7 +29,7 @@ function SideSliderWrapper() {
           className="go-back-icon"
           whileTap={{ scale: 0.75 }}
           onClick={() => {
-            showSideSlider();
+            showSideSlider(dispatch, sideSliderShow, "");
           }}
         >
           <MdOutlineKeyboardBackspace className="text-textColor text-3xl " />
@@ -49,18 +44,17 @@ function SideSliderWrapper() {
             <motion.p
               whileTap={{ scale: 0.9 }}
               className="clear-cart"
-              onClick={clearCart}
+              onClick={()=>clearCart(dispatch)}
             >
               Clear <RiRefreshFill />
             </motion.p>
           </div>
         )}
       </div>
-      <div className="side-slider-content">
         {type === "wishlist" && <Wishlist />}
         {type === "viewSimilar" && <ViewSimilar />}
         {type === "cart" && <Cart />}
-      </div>
+
     </motion.div>
   );
 }

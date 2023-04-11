@@ -1,7 +1,7 @@
 import Logo from "../../img/logo.png";
 import Avatar from "../../img/avatar.png";
 import { motion } from "framer-motion";
-import { MdAdd, MdLogout } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 
 import { AiOutlineHeart } from "react-icons/ai";
@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { app } from "../../firebase.config";
 import { SET_USER } from "../../redux/userSlice";
 import { useSelector } from "react-redux";
-import { SET_SIDE_SLIDER_SHOW } from "../../redux/sideSliderShowSlice";
+import { showSideSlider } from "../../utils/commonFunctions";
 import "./Nav.css";
 
 const Nav = () => {
@@ -21,18 +21,17 @@ const Nav = () => {
   const sideSliderShow = useSelector(
     (state) => state.sideSliderShow.sideSliderShow
   );
-  
-  // const cartItems = useSelector((state) => state.cartItems.cartItems);
+
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const dispatch = useDispatch();
-  const showSideSlider = (type) => {
-    const payload = {
-      show: !sideSliderShow,
-      type: type,
-    };
-    dispatch(SET_SIDE_SLIDER_SHOW(payload));
-  };
+  // const showSideSlider = (type) => {
+  //   const payload = {
+  //     show: !sideSliderShow,
+  //     type: type,
+  //   };
+  //   dispatch(SET_SIDE_SLIDER_SHOW(payload));
+  // };
   async function login() {
     if (!user) {
       const {
@@ -70,21 +69,21 @@ const Nav = () => {
             <div className="icon-container">
               <AiOutlineHeart
                 className="icon"
-                onClick={() => showSideSlider("wishlist")}
+                // onClick={() => showSideSlider("wishlist")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  showSideSlider(dispatch, sideSliderShow, "wishlist");
+                }}
               />
             </div>
             <div className="icon-container">
               <HiOutlineShoppingBag
                 className="icon"
-                onClick={() => showSideSlider("cart")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  showSideSlider(dispatch, sideSliderShow, "cart");
+                }}
               />
-              {/* {cartItems && cartItems.length > 0 && (
-                <div className="w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center absolute -top-2 left-5">
-                  <p className="text-xs text-white font-semibold">
-                    {cartItems.length}
-                  </p>
-                </div>
-              )} */}
             </div>
 
             <div className=" avatar-container">

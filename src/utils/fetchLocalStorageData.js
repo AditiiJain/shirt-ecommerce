@@ -21,5 +21,6 @@ export const fetchWishlist = () => {
     JSON.parse(localStorage.getItem("wishlist")) !== undefined
       ? JSON.parse(localStorage.getItem("wishlist"))
       : [];
+      
   return wishlist;
 };

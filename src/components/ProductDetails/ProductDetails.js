@@ -5,12 +5,13 @@ import { BsStarFill } from "react-icons/bs";
 import { BsHandbagFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { IoMdListBox } from "react-icons/io";
+import Loader from "../../img/loader.gif";
 import useSpecificProduct from "../../utils/useSpecificProduct";
 import { useState } from "react";
 import { ZoomModal } from "../../index";
-import { SET_WISHLIST } from "../../redux/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_CART_ITEMS } from "../../redux/cartItemsSlice";
+import { showSideSlider, addToWishlist } from "../../utils/commonFunctions";
 
 const ProductDetails = () => {
   const [selectSize, setSelectSize] = useState("");
@@ -18,24 +19,14 @@ const ProductDetails = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const { shirtId } = useParams();
   const productData = useSpecificProduct(shirtId);
+ 
+  const sideSliderShow = useSelector(
+    (state) => state.sideSliderShow.sideSliderShow
+  );
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  console.log(wishlist,"product")
   const cartItems = useSelector((state) => state.cartItems.cartItems);
   const dispatch = useDispatch();
-
-  const addToWishlist = (item) => {
-    const temp = item[0];
-    let arr = [...wishlist, temp];
-    let newWishlist = [];
-
-    for (let i = 0; i < arr.length; i++) {
-      if (!newWishlist.includes(arr[i])) {
-        newWishlist.push(arr[i]);
-      }
-    }
-    console.log(newWishlist);
-    dispatch(SET_WISHLIST(newWishlist));
-    localStorage.setItem("wishlist", JSON.stringify(newWishlist));
-  };
 
   const addToCart = (item) => {
     let temporary = {
@@ -60,7 +51,8 @@ const ProductDetails = () => {
   return (
     <>
       {!productData ? (
-        <>Loading</>
+        <div className="loading"><img src={Loader} alt="" /></div>
+        
       ) : (
         <>
           <div className="specific-product-page-container">
@@ -150,7 +142,8 @@ const ProductDetails = () => {
                 <div
                   className="specific-product-details-wishlist-btn"
                   onClick={() => {
-                    addToWishlist(productData);
+                    addToWishlist(wishlist, dispatch, productData[0]);
+                    showSideSlider(dispatch, sideSliderShow, "wishlist");
                   }}
                 >
                   <span className="icon-btn">

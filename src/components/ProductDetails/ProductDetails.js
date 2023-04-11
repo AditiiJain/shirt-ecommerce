@@ -5,7 +5,7 @@ import { BsStarFill } from "react-icons/bs";
 import { BsHandbagFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { IoMdListBox } from "react-icons/io";
-import Loader from "../../img/loader.gif";
+// import Loader from "../../img/loader.gif";
 import useSpecificProduct from "../../utils/useSpecificProduct";
 import { useState } from "react";
 import { ZoomModal } from "../../index";
@@ -51,7 +51,10 @@ const ProductDetails = () => {
   return (
     <>
       {!productData ? (
-        <div className="loading"><img src={Loader} alt="" /></div>
+        <div className="loading">
+          Loading...
+          {/* <img src={Loader} alt="" /> */}
+          </div>
         
       ) : (
         <>

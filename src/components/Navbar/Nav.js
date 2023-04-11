@@ -25,13 +25,7 @@ const Nav = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const dispatch = useDispatch();
-  // const showSideSlider = (type) => {
-  //   const payload = {
-  //     show: !sideSliderShow,
-  //     type: type,
-  //   };
-  //   dispatch(SET_SIDE_SLIDER_SHOW(payload));
-  // };
+
   async function login() {
     if (!user) {
       const {

@@ -6,6 +6,7 @@ export const showSideSlider = (dispatch, sideSliderShow, type) => {
   //     show: !sideSliderShow,
   //     type: type,
   //   };
+  let payload;
   if (type == "") {
     payload = {
       show: false,

@@ -1,25 +1,26 @@
 .main-page-container {
   display: flex;
   flex-direction: row;
-background-color: white;
-padding: 36px 12px;
+  background-color: white;
+  padding: 36px 24px;
+  gap: 24px;
 }
 
 .filter-left-container {
   min-width: 252px;
   max-width: 252px;
 }
-.items-right-container{
-    display: flex;
-    flex-direction: column;
-    gap:24px;
-    /* justify-content: space-between; */
-    flex-wrap: wrap;
+.items-right-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
 }
-.product-list{
+.product-list {
   display: flex;
   flex-direction: row;
-  gap:24px;
+  gap: 24px;
   /* justify-content: space-between; */
   flex-wrap: wrap;
 }

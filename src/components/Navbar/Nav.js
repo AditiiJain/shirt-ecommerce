@@ -13,11 +13,15 @@ import { SET_USER } from "../../redux/userSlice";
 import { useSelector } from "react-redux";
 import "./Nav.css";
 import { useShowSideSlider } from "../../utils/useShowSideSlider";
+import { useWishlist } from "../../utils/useWishlist";
+import { useCart } from "../../utils/useCart";
 
 const Nav = () => {
   const [isMenu, setIsMenu] = useState(false);
   const user = useSelector((state) => state.user.user);
   const { showSideSlider } = useShowSideSlider();
+  const { wishlist } = useWishlist();
+  const { cartItems } = useCart();
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const dispatch = useDispatch();
@@ -57,6 +61,9 @@ const Nav = () => {
 
           <div className="cart-wishlist-avatar-container ">
             <div className="icon-container">
+              {wishlist?.length != 0 && (
+                <span className="item-count">{wishlist?.length}</span>
+              )}
               <AiOutlineHeart
                 className="icon"
                 onClick={(e) => {
@@ -66,6 +73,9 @@ const Nav = () => {
               />
             </div>
             <div className="icon-container">
+              {cartItems?.length != 0 && (
+                <span className="item-count">{cartItems?.length}</span>
+              )}
               <HiOutlineShoppingBag
                 className="icon"
                 onClick={(e) => {

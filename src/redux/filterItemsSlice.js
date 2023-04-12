@@ -59,7 +59,7 @@ const filterItemsSlice = createSlice({
     },
     FILTER_PRODUCTS: (state, action) => {
       let tempFilterProducts = action.payload;
-      const { text } = state.filters;
+      const { text, category } = state.filters;
 
       if (text) {
         tempFilterProducts = tempFilterProducts?.filter((product) => {
@@ -67,11 +67,12 @@ const filterItemsSlice = createSlice({
         });
       }
 
-      // if (category) {
-      //   tempFilterProducts = tempFilterProducts.filter((currElm) => {
-      //     return currElm.category == category;
-      //   });
-      // }
+      if (category != "all") {
+        tempFilterProducts = tempFilterProducts.filter((currElm) => {
+          // console.log(currElm.category == category, "curr");
+          return currElm.category == category;
+        });
+      }
 
       state.filterItems =
         tempFilterProducts == null ? [] : [...tempFilterProducts];

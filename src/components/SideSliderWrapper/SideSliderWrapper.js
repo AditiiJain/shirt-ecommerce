@@ -28,11 +28,11 @@ function SideSliderWrapper() {
         >
           <MdOutlineKeyboardBackspace className="text-textColor text-3xl " />
         </motion.div>
-
+<div className="side-slider-header-wrapper">
         {type === "wishlist" && <div className="side-slider-header-head">Wishlist</div>}
         {type === "cart" && <div className="side-slider-header-head">Cart</div>}
         {type === "viewSimilar" && <div className="side-slider-header-head">Similar Shirts</div>}
-
+        </div>
         {type === "cart" && (
           <div>
             <motion.p

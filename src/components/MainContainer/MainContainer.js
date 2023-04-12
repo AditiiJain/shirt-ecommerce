@@ -18,7 +18,7 @@ const MainContainer = () => {
               filterItems?.map((item) => (
                 <ProductCard key={item.id} product={item} view={true} />
               ))}
-            {filterItems?.length == 0 && <div>No such Products Available</div>}
+            {filterItems?.length == 0 && <div>No Products Available</div>}
           </div>
         </div>
       </section>

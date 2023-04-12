@@ -4,48 +4,32 @@ import { BsStarFill } from "react-icons/bs";
 // import { Error } from "../../index";
 import { BsHandbagFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
-import { IoMdListBox } from "react-icons/io";
 // import Loader from "../../img/loader.gif";
 import useSpecificProduct from "../../utils/useSpecificProduct";
 import { useState } from "react";
 import { ZoomModal } from "../../index";
-import { useDispatch, useSelector } from "react-redux";
-import { SET_CART_ITEMS } from "../../redux/cartItemsSlice";
-import { showSideSlider, addToWishlist } from "../../utils/commonFunctions";
+import { useWishlist } from "../../utils/useWishlist";
+import { useCart } from "../../utils/useCart";
+import { useShowSideSlider } from "../../utils/useShowSideSlider";
 
 const ProductDetails = () => {
   const [selectSize, setSelectSize] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [error, setError] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
   const { shirtId } = useParams();
   const productData = useSpecificProduct(shirtId);
- 
-  const sideSliderShow = useSelector(
-    (state) => state.sideSliderShow.sideSliderShow
-  );
-  const wishlist = useSelector((state) => state.wishlist.wishlist);
-  console.log(wishlist,"product")
-  const cartItems = useSelector((state) => state.cartItems.cartItems);
-  const dispatch = useDispatch();
+  const { addToCart } = useCart();
+  const { addToWishlist } = useWishlist();
+  const { showSideSlider } = useShowSideSlider();
 
-  const addToCart = (item) => {
-    let temporary = {
-      ...item[0],
-      selectedSize: selectSize,
-    };
-    const temp = temporary;
-
-    let arr = [...cartItems, temp];
-    let newCart = [];
-
-    for (let i = 0; i < arr.length; i++) {
-      if (!newCart.includes(arr[i])) {
-        newCart.push(arr[i]);
-      }
+  const handleAddToCart = () => {
+    if (selectSize == "") {
+      setError(true);
+    } else {
+      addToCart(productData, selectSize);
+      showSideSlider("cart");
     }
-    // console.log(newWishlist);
-    dispatch(SET_CART_ITEMS(newCart));
-    localStorage.setItem("cartItems", JSON.stringify(newCart));
   };
 
   return (
@@ -54,8 +38,7 @@ const ProductDetails = () => {
         <div className="loading">
           Loading...
           {/* <img src={Loader} alt="" /> */}
-          </div>
-        
+        </div>
       ) : (
         <>
           <div className="specific-product-page-container">
@@ -107,6 +90,11 @@ const ProductDetails = () => {
                   <p className="specific-product-details-select-size-header">
                     SELECT SIZE
                   </p>
+                  {error && (
+                    <p className="error-message">
+                      Please select the size first.
+                    </p>
+                  )}
                   <div className="specific-product-details-size-buttons">
                     {productData?.[0]?.sizes?.map((size) => {
                       return (
@@ -117,6 +105,7 @@ const ProductDetails = () => {
                           key={size}
                           onClick={() => {
                             setSelectSize(size);
+                            setError(false);
                           }}
                         >
                           {size}
@@ -129,13 +118,8 @@ const ProductDetails = () => {
 
               <div className="specific-product-details-bottom">
                 <button
-                  className={`specific-product-details-cart-btn ${
-                    selectSize == "" ? "btn-disabled" : ""
-                  }`}
-                  onClick={() => {
-                    addToCart(productData);
-                  }}
-                  disabled={selectSize == "" ? true : false}
+                  className="specific-product-details-cart-btn"
+                  onClick={handleAddToCart}
                 >
                   <span className="icon-btn">
                     <BsHandbagFill />
@@ -145,8 +129,8 @@ const ProductDetails = () => {
                 <div
                   className="specific-product-details-wishlist-btn"
                   onClick={() => {
-                    addToWishlist(wishlist, dispatch, productData[0]);
-                    showSideSlider(dispatch, sideSliderShow, "wishlist");
+                    addToWishlist(productData[0]);
+                    showSideSlider("wishlist");
                   }}
                 >
                   <span className="icon-btn">

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Sort.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GET_SORT_VALUE } from "../../redux/filterItemsSlice";
 
 
@@ -23,18 +23,6 @@ function Sort() {
         </select>
       </form>
 
-      {/* <div class="sort-sortBy">
-        Sort by : <span>Recommended</span>
-        <span class="myntraweb-sprite sort-downArrow sprites-downArrow"></span>
-        <ul class="sort-list">
-          <li>
-            <label class="sort-label ">
-              <input type="radio" value="recommended" />
-              Recommended
-            </label>
-          </li>
-        </ul>
-      </div> */}
     </div>
   );
 }

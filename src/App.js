@@ -15,12 +15,14 @@ import store from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { SET_PRODUCT_ITEMS } from "./redux/productItemsSlice";
-import { FILTER_PRODUCTS, SET_FILTER_ITEMS, SORTING_PRODUCTS } from "./redux/filterItemsSlice";
+import {
+  FILTER_PRODUCTS,
+  SET_FILTER_ITEMS,
+  SORTING_PRODUCTS,
+} from "./redux/filterItemsSlice";
 import { getAllItems } from "./utils/firebaseFunctions";
-// import { SET_SIDE_SLIDER_SHOW } from "./redux/sideSliderShowSlice";
-// import { useSelector } from "react-redux";
 import { MainContainer, ProductDetails } from "./index";
-// import { FilterContextProvider } from "./context/filterContext";
+import { useShowSideSlider } from "./utils/useShowSideSlider";
 
 // const PrivateRoute = ({ children }) => {
 //   const user = useSelector((state) => state.user.user);
@@ -33,12 +35,11 @@ import { MainContainer, ProductDetails } from "./index";
 
 const App = () => {
   const dispatch = useDispatch();
-  const sideSliderShow = useSelector(
-    (state) => state.sideSliderShow.sideSliderShow
-  );
-  const sorting_value = useSelector(state=>state.filterItems.sortingValue)
-  const filters = useSelector(state=>state.filterItems.filters)
-  const allItems = useSelector(state=>state.filterItems.allItems)
+  const { sideSliderShow } = useShowSideSlider();
+  const sorting_value = useSelector((state) => state.filterItems.sortingValue);
+  const filterItems = useSelector((state) => state.filterItems.filterItems);
+  const filters = useSelector((state) => state.filterItems.filters);
+  const allItems = useSelector((state) => state.filterItems.allItems);
   const productItems = useSelector((state) => state.productItems.productItems);
 
   const fetchItems = async () => {
@@ -59,10 +60,16 @@ const App = () => {
     filterItemsDispatch();
   }, [productItems]);
 
-  useEffect(()=>{
-    dispatch(FILTER_PRODUCTS(allItems))
-    dispatch(SORTING_PRODUCTS(productItems))
-  },[productItems,sorting_value,filters])
+  // useEffect(() => {
+  // dispatch(FILTER_PRODUCTS(allItems));
+  // dispatch(SORTING_PRODUCTS(filterItems));
+  // }, [productItems, sorting_value]);
+  // }, [productItems, sorting_value, filters]);
+
+  useEffect(() => {
+    // dispatch(FILTER_PRODUCTS(allItems));
+    dispatch(SORTING_PRODUCTS(filterItems));
+  }, [sorting_value, filters]);
 
   return (
     // <AnimatePresence mode="wait">
@@ -85,7 +92,7 @@ const appRouter = createBrowserRouter([
     element: (
       <Provider store={store}>
         {/* <FilterContextProvider> */}
-          <App />
+        <App />
         {/* </FilterContextProvider> */}
       </Provider>
     ),

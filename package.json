@@ -4,7 +4,7 @@
   "description": "An ecommerce website for selling shirts",
   "scripts": {
     "start": "parcel index.html",
-    "build":"parcel build index.html",
+    "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Aditi Jain",
@@ -24,6 +24,7 @@
     "@babel/core": "^7.21.4",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "parcel": "^2.8.3",
+    "parcel-bundler": "^1.12.5",
     "process": "^0.11.10"
   }
 }

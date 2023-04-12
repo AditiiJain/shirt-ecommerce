@@ -55,6 +55,11 @@
   align-items: center;
 }
 
+.side-slider-header-head{
+font-size: 18px;
+font-weight: 600;
+}
+
 @media screen and (max-width: 727px) {
   .side-slider-container {
     width: 100%;

@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
-
 import "./Cart.css";
 import { useSelector } from "react-redux";
 import EmptyCart from "../../img/emptyCart.svg";
 import { useEffect, useState } from "react";
 import CartCard from "../CartCard/CartCard";
-
+import { useCart } from "../../utils/useCart";
 
 function Cart() {
   const [total, setTotal] = useState(0);
-  const cartItems = useSelector((state) => state.cartItems.cartItems);
+  const { cartItems } = useCart();
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ function Cart() {
           <div className="cart-items-container">
             {cartItems &&
               cartItems?.map((cartItem) => (
-                <CartCard key={cartItem.id} details={cartItem} />
+                <CartCard key={cartItem.cartId} details={cartItem} />
               ))}
           </div>
 

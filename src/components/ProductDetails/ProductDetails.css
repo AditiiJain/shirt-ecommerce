@@ -288,7 +288,12 @@
   background-color: white;
 }
 
-.loading img{
-  width:100px;
+.loading img {
+  width: 100px;
   height: 100px;
+}
+
+.error-message{
+  color:red;
+  font-size:12px;
 }

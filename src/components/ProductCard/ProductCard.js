@@ -2,16 +2,13 @@ import "./ProductCard.css";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCardText } from "react-icons/bs";
-import { useSelector, useDispatch } from "react-redux";
-import { showSideSlider, addToWishlist } from "../../utils/commonFunctions";
 
+import { useWishlist } from "../../utils/useWishlist";
+import { useShowSideSlider } from "../../utils/useShowSideSlider";
 
 const ProductCard = ({ product, view }) => {
-  const wishlist = useSelector((state) => state.wishlist.wishlist);
-  const dispatch = useDispatch();
-  const sideSliderShow = useSelector(
-    (state) => state.sideSliderShow.sideSliderShow
-  );
+  const { addToWishlist } = useWishlist();
+  const { showSideSlider } = useShowSideSlider();
 
   return (
     <>
@@ -26,8 +23,9 @@ const ProductCard = ({ product, view }) => {
                 className="wishlist-icon"
                 onClick={(e) => {
                   e.preventDefault();
-                  addToWishlist(wishlist, dispatch, product);
-                  showSideSlider(dispatch, sideSliderShow, "wishlist");
+
+                  addToWishlist(product);
+                  showSideSlider("wishlist");
                 }}
               />
             </div>
@@ -36,7 +34,7 @@ const ProductCard = ({ product, view }) => {
                 className="view-similar-container"
                 onClick={(e) => {
                   e.preventDefault();
-                  showSideSlider(dispatch, sideSliderShow, "viewSimilar");
+                  showSideSlider("viewSimilar");
                 }}
               >
                 <span>

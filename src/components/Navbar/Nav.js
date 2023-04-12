@@ -3,7 +3,6 @@ import Avatar from "../../img/avatar.png";
 import { motion } from "framer-motion";
 import { MdLogout } from "react-icons/md";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-
 import { AiOutlineHeart } from "react-icons/ai";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -12,16 +11,13 @@ import { useDispatch } from "react-redux";
 import { app } from "../../firebase.config";
 import { SET_USER } from "../../redux/userSlice";
 import { useSelector } from "react-redux";
-import { showSideSlider } from "../../utils/commonFunctions";
 import "./Nav.css";
+import { useShowSideSlider } from "../../utils/useShowSideSlider";
 
 const Nav = () => {
   const [isMenu, setIsMenu] = useState(false);
   const user = useSelector((state) => state.user.user);
-  const sideSliderShow = useSelector(
-    (state) => state.sideSliderShow.sideSliderShow
-  );
-
+  const { showSideSlider } = useShowSideSlider();
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const dispatch = useDispatch();
@@ -31,9 +27,9 @@ const Nav = () => {
       const {
         user: { refreshToken, providerData },
       } = await signInWithPopup(firebaseAuth, provider);
-      console.log(providerData?.[0]);
-      dispatch(SET_USER(providerData[0]));
-      localStorage.setItem("user", JSON.stringify(providerData[0]));
+
+      dispatch(SET_USER(providerData?.[0]));
+      localStorage.setItem("user", JSON.stringify(providerData?.[0]));
     } //if already user is there then, menu should be displayed
     else {
       setIsMenu((prev) => !prev);
@@ -63,10 +59,9 @@ const Nav = () => {
             <div className="icon-container">
               <AiOutlineHeart
                 className="icon"
-                // onClick={() => showSideSlider("wishlist")}
                 onClick={(e) => {
                   e.preventDefault();
-                  showSideSlider(dispatch, sideSliderShow, "wishlist");
+                  showSideSlider("wishlist");
                 }}
               />
             </div>
@@ -75,7 +70,7 @@ const Nav = () => {
                 className="icon"
                 onClick={(e) => {
                   e.preventDefault();
-                  showSideSlider(dispatch, sideSliderShow, "cart");
+                  showSideSlider("cart");
                 }}
               />
             </div>
@@ -96,10 +91,7 @@ const Nav = () => {
                   exit={{ opacity: 0, scale: 0.6 }}
                   className="dropdown-container"
                 >
-                  <p
-                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base"
-                    onClick={() => logout()}
-                  >
+                  <p onClick={() => logout()}>
                     Logout
                     <MdLogout />
                   </p>

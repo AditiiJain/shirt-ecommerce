@@ -8,6 +8,8 @@ const filterItemsSlice = createSlice({
     sortingValue: "lowest",
     filters: {
       text: "",
+      category: "all",
+      brand: "all",
     },
   },
   reducers: {
@@ -56,18 +58,6 @@ const filterItemsSlice = createSlice({
       };
     },
     FILTER_PRODUCTS: (state, action) => {
-      //       let tempFilterProducts = Array.from(state.allItems);
-      // console.log(tempFilterProducts)
-      //       const { text } = state.filters;
-
-      //       if (text) {
-      //         tempFilterProducts = tempFilterProducts.filter((product) => {
-      //           return product?.brand?.trim()?.toLowerCase()?.includes(text);
-      //         });
-      //       }
-
-      //       state.filterItems = tempFilterProducts;
-
       let tempFilterProducts = action.payload;
       const { text } = state.filters;
 
@@ -77,9 +67,14 @@ const filterItemsSlice = createSlice({
         });
       }
 
-      // state.filterItems =
-      //   tempFilterProducts == null ? [] : [...tempFilterProducts];
-      // console.log(state.filterItems,"filter")
+      // if (category) {
+      //   tempFilterProducts = tempFilterProducts.filter((currElm) => {
+      //     return currElm.category == category;
+      //   });
+      // }
+
+      state.filterItems =
+        tempFilterProducts == null ? [] : [...tempFilterProducts];
     },
   },
 });

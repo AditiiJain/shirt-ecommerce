@@ -1,27 +1,14 @@
 import React from "react";
 import "./CartCard.css";
 import { TfiClose } from "react-icons/tfi";
-import { useDispatch, useSelector } from "react-redux";
-import { SET_CART_ITEMS } from "../../redux/cartItemsSlice";
-function CartCard({ details }) {
-  const cartItems = useSelector((state) => state.cartItems.cartItems);
-  const dispatch = useDispatch();
 
-  const removeFromCart = () => {
-    console.log(details.selectedSize);
-    let cart = cartItems.filter((product) => {
-     
-      return (
-        product.id !== details.id &&
-        product.selectedSize != details.selectedSize
-      );
-    });
-    dispatch(SET_CART_ITEMS(cart));
-    localStorage.setItem("cartItems", JSON.stringify(cart));
-  };
+import { useCart } from "../../utils/useCart";
+function CartCard({ details }) {
+  const { removeFromCart } = useCart();
+ 
   return (
     <div className="cart-card-container">
-      <div className="cart-remove" onClick={() => removeFromCart()}>
+      <div className="cart-remove" onClick={() => removeFromCart(details)}>
         <TfiClose />
       </div>
       <div className="cart-card-img-container">

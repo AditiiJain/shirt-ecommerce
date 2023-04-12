@@ -5,15 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { SET_WISHLIST } from "../../redux/wishlistSlice";
 import { Link } from "react-router-dom";
 
+import { useWishlist } from "../../utils/useWishlist";
+
 function WishlistCard({ item }) {
-  const wishlist = useSelector((state) => state.wishlist.wishlist);
-  const dispatch = useDispatch();
-  const removeFromWishlist = () => {
-    let newWishlist = wishlist.filter((product) => product.id !== item.id);
-    console.log(newWishlist, "e");
-    dispatch(SET_WISHLIST(newWishlist));
-    localStorage.setItem("wishlist", JSON.stringify(newWishlist));
-  };
+  const { removeFromWishlist } = useWishlist();
   return (
     <Link to={`/shirt/${item?.id}`} className="link">
       <div className="wishlist-card-container">
@@ -22,8 +17,8 @@ function WishlistCard({ item }) {
           <div
             className="wishlist-remove"
             onClick={(e) => {
-              // e.preventDefault();
-              removeFromWishlist();
+              e.preventDefault();
+              removeFromWishlist(item);
             }}
           >
             <TfiClose />

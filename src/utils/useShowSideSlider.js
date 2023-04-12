@@ -1,19 +1,25 @@
-import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { SET_SIDE_SLIDER_SHOW } from "../redux/sideSliderShowSlice";
 
-const useShowSideSlider = () => {
-  const [showSlider, setShowSlider] = useState({});
+export const useShowSideSlider = () => {
+  const { sideSliderShow, type } = useSelector((state) => state.sideSliderShow);
   const dispatch = useDispatch();
-  const sideSliderShow = useSelector(
-    (state) => state.sideSliderShow.sideSliderShow
-  );
-  useEffect(() => {
-    setShowSlider({ dispatch, sideSliderShow });
-    console.log(setShowSlider);
-  }, []);
+  const showSideSlider = (type) => {
+    let payload;
+    if (type == "") {
+      payload = {
+        show: false,
+        type: type,
+      };
+    } else {
+      payload = {
+        show: true,
+        type: type,
+      };
+    }
 
-  console.log(setShowSlider);
-  return showSlider;
+    dispatch(SET_SIDE_SLIDER_SHOW(payload));
+  };
+
+  return { sideSliderShow, showSideSlider, type };
 };
-
-export default useShowSideSlider;

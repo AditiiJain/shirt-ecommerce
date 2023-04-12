@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchWishlist } from "../utils/fetchLocalStorageData";
 
 const wishlist = fetchWishlist();
-console.log(wishlist,"fetch")
 
 const wishlistSlice = createSlice({
   name: "wishlist",

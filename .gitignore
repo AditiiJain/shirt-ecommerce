@@ -9,3 +9,5 @@ build
 .firebase
 
 .cache
+
+.env
